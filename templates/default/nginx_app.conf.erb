@@ -1,0 +1,39 @@
+server {
+    listen      *:80;
+    server_name <%= @params[:server_name] %> localhost;
+    
+    # Character Set
+    charset utf-8;
+
+    # Logs
+    #access_log /vhosts/DOMAIN/logs/access_log main;
+    #error_log  /vhosts/DOMAIN/logs/error_log;
+
+    # Directory Indexes
+    index index.php;
+
+    # Document Root
+    root <%= @params[:root] %>;
+
+    # Location
+    location / {
+        try_files $uri $uri/ /index.php;
+    }
+
+    # Error Pages
+    error_page 404 /404.html;
+    error_page 500 502 503 504 /50x.html;
+
+    # PHP-FPM Support
+    location ~ \.php$ {
+        # With php5-fpm:
+    fastcgi_pass unix:/var/run/php5-fpm.sock;
+    fastcgi_index index.php;
+    include fastcgi_params;
+    }
+
+    # Block access to .htaccess
+    location ~ \.htaccess {
+        deny all;
+    }
+}
