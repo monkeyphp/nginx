@@ -3,15 +3,22 @@
 #
 
 case node['platform']
+
 when 'debian', 'ubuntu'
-    default['nginx']['dir'] = '/etc/nginx'
+    default['nginx']['dir']  = '/etc/nginx'
+    default['nginx']['user'] = 'www-data'
+    default['nginx']['pid']  = '/run/nginx.pid'
+    default['nginx']['events']['worker_connections'] = 768
+    default['nginx']['worker_processes']             = 4
+        
+when 'centos'
+    default['nginx']['user'] = 'nginx'
+    default['nginx']['pid']  = '/var/run/nginx.pid'
+    default['nginx']['worker_processes'] = 1
+    default['nginx']['events']['worker_connections'] = 1024
 end
 
 default['nginx']['default_site_enabled']         = false
-default['nginx']['user']                         = 'www-data'
-default['nginx']['worker_processes']             = 4
-default['nginx']['pid']                          = '/run/nginx.pid'
-default['nginx']['events']['worker_connections'] = 768
 default['nginx']['events']['multi_accept']       = 'off'
 default['nginx']['http']['sendfile']             = 'on'
 default['nginx']['http']['tcp_nopush']           = 'on'
