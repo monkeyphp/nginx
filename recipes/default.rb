@@ -32,6 +32,22 @@ when "centos"
         supports :status => true, :start => true, :stop => true, :restart => true, :reload => true
     end
     
+    # create sites-available
+    directory "/etc/nginx/sites-available" do
+        owner "root"
+        group "root"
+        mode 00644
+        action :create
+    end
+
+    # create sites-enabled
+    directory "/etc/nginx/sites-enabled" do
+        owner "root"
+        group "root"
+        mode 00644
+        action :create
+    end
+
     template "/etc/nginx/nginx.conf" do
         source "nginx.conf.erb"
         owner "root"

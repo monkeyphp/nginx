@@ -12,6 +12,7 @@ when 'debian', 'ubuntu'
     default['nginx']['worker_processes']             = 4
         
 when 'centos'
+    default['nginx']['dir']  = '/etc/nginx'
     default['nginx']['user'] = 'nginx'
     default['nginx']['pid']  = '/var/run/nginx.pid'
     default['nginx']['worker_processes'] = 1
