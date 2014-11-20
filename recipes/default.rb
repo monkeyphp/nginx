@@ -25,7 +25,8 @@ when "centos"
     end
     
     package "nginx" do
-        action :install
+        action :upgrade
+        version "1.6.0"
     end
     
     service "nginx" do
